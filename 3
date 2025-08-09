@@ -1,0 +1,18 @@
+colors = ['Red', 'Green', 'Blue']
+neighbors = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C'],
+    'C': ['A', 'B']
+}
+
+def is_valid(node, color, assignment):
+    return all(assignment.get(n) != color for n in neighbors[node])
+
+def backtrack(assignment):
+    if len(assignment) == len(neighbors):
+        return assignment
+    unassigned = [n for n in neighbors if n not in assignment][0]
+    for color in colors:
+        if is_valid(unassigned, color, assignment):
+            assignment[unassigned] = color
+            result = backtrack(assignment
