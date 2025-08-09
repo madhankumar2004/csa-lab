@@ -1,0 +1,7 @@
+from sklearn import tree
+
+X = [[0], [1]]
+Y = ['No', 'Yes']
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(X, Y)
+print(clf.predict([[1]]))
