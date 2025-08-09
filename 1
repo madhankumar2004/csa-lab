@@ -1,0 +1,43 @@
+from collections import deque
+
+goal = '123456780'
+
+def get_neighbors(state):
+    idx = state.index('0')
+    moves = []
+    if idx not in [0, 1, 2]:  # Up
+        moves.append(idx - 3)
+    if idx not in [6, 7, 8]:  # Down
+        moves.append(idx + 3)
+    if idx not in [0, 3, 6]:  # Left
+        moves.append(idx - 1)
+    if idx not in [2, 5, 8]:  # Right
+        moves.append(idx + 1)
+
+    neighbors = []
+    for move in moves:
+        lst = list(state)
+        lst[idx], lst[move] = lst[move], lst[idx]
+        neighbors.append("".join(lst))
+    return neighbors
+
+def solve(start):
+    queue = deque([[start]])
+    visited = set()
+    while queue:
+        path = queue.popleft()
+        state = path[-1]
+        if state == goal:
+            return path
+        if state in visited:
+            continue
+        visited.add(state)
+        for neighbor in get_neighbors(state):
+            new_path = list(path)
+            new_path.append(neighbor)
+            queue.append(new_path)
+
+# Example usage
+start_state = '123456708'
+solution = solve(start_state)
+print("Moves:", solution)
